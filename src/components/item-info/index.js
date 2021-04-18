@@ -17,6 +17,7 @@ export const ItemInfo = ({
   total_amount,
   isDetailView,
 }) => {
+  console.log('swaps', swaps)
   const { syncTaquito, collect, curate, acc } = useContext(HicetnuncContext)
   const reducer = (accumulator, currentValue) =>
     parseInt(accumulator) + parseInt(currentValue)
@@ -39,6 +40,7 @@ export const ItemInfo = ({
   let ed =
     swaps.length !== 0 ? swaps.map((e) => e.objkt_amount).reduce(reducer) : 'X'
   let s = _.minBy(swaps, (o) => Number(o.xtz_per_objkt))
+  let maxPrice = _.maxBy(swaps, (o) => Number(o.xtz_per_objkt))
 
   var message = ''
 
@@ -59,6 +61,7 @@ export const ItemInfo = ({
     }
   }
 
+  console.log('SSSSS', s)
   return (
     <>
       <div className={styles.container}>
@@ -79,6 +82,12 @@ export const ItemInfo = ({
                   </span>
                 </span>
               </p>
+              {false && (
+                <p>
+                  Price range: {(Number(s.xtz_per_objkt) / 1000000).toFixed(2)}-
+                  {(Number(maxPrice.xtz_per_objkt) / 1000000).toFixed(2)}
+                </p>
+              )}
             </div>
           )}
         </div>
